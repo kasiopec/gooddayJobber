@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">gooddayJobber</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Continue</string>
+    <string name="phone_number_description_text">Please enter phone number to loan above amount.</string>
+    <string name="phone_number_hint_text">Phone number</string>
+    <string name="slider_header">Select loan amount</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+</resources>
