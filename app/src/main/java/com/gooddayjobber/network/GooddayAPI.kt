@@ -51,19 +51,11 @@ class GooddayAPI {
     private val sozoClient = OkHttpClient.Builder()
         .apply {
             addInterceptor { chain ->
-                val request = chain.request()
+                val request = chain.request().newBuilder()
+                    .addHeader(API_KEY_QUERY, API_KEY)
+                    .build()
 
-                chain.proceed(
-                    request
-                        .newBuilder()
-                        .url(
-                            request.url()
-                                .newBuilder()
-                                .addQueryParameter(API_KEY_QUERY, API_KEY)
-                                .build()
-                        )
-                        .build()
-                ).also {
+                chain.proceed(request).also {
                     Timber.d("call: $it")
                 }
             }

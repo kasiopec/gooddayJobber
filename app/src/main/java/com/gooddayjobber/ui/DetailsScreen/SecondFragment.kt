@@ -1,4 +1,4 @@
-package com.gooddayjobber.ui
+package com.gooddayjobber.ui.DetailsScreen
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

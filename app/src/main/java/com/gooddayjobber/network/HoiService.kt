@@ -10,7 +10,7 @@ interface HoiService {
 
     @POST("api/sms")
     suspend fun registerNumber(
-        @Query("number") number: Long,
+        @Query("number") number: String,
         @Query("registration") registration: Boolean,
     ): Response<HoiResponse>
 

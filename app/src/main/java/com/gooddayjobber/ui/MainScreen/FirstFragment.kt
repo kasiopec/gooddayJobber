@@ -1,5 +1,7 @@
-package com.gooddayjobber.ui
+package com.gooddayjobber.ui.MainScreen
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,14 +9,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
-import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doOnTextChanged
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.gooddayjobber.R
 import com.gooddayjobber.databinding.FragmentFirstBinding
+import com.gooddayjobber.ui.MainScreen.adapter.LendersAdapter
+import com.gooddayjobber.util.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
@@ -28,6 +36,11 @@ class FirstFragment : Fragment() {
 
     private val viewModel by viewModels<FirstFragViewModel>()
     private var textFieldData: String? = null
+    private val recyclerColumns = 2
+    private val adapter = LendersAdapter(emptyList(), LendersAdapter.OnClickListener { item ->
+        findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+
+    })
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -45,6 +58,60 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.hoiData.collect { hoiData ->
+                    when (hoiData.status) {
+                        201 -> viewModel.getSozoData()
+                        else -> Timber.d("hoiResponse: ${hoiData.status} ${hoiData.message}")
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.sozoData.collect { lendersList ->
+                    if (lendersList.isNotEmpty()) {
+                        adapter.updateData(lendersList)
+                        binding.lendersRecycler.visibility = View.VISIBLE
+                    } else {
+                        binding.lendersRecycler.visibility = View.GONE
+                    }
+
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.hoiErrorFlow.collect { hoiError ->
+                    Toast.makeText(context, hoiError, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.sozoErrorFlow.collect { hoiError ->
+                    Toast.makeText(context, hoiError, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        binding.lendersRecycler.layoutManager = GridLayoutManager(context, recyclerColumns)
+        binding.lendersRecycler.addItemDecoration(
+            LendersGridItemDecorator(
+                spanCount = 2,
+                spacing = 100,
+                includeEdge = true
+            )
+        )
+
+
+        binding.lendersRecycler.adapter = adapter
+
         binding.seekBarMaxValueText.text = 60000.toString()
         binding.seekBarStartValueText.text = 0.toString()
         binding.seekBarCurrentValueText.text = 0.toString()
@@ -96,8 +163,10 @@ class FirstFragment : Fragment() {
 
 
         binding.buttonAccept.setOnClickListener {
+            hideKeyboard()
 
             textFieldData?.let {
+                Toast.makeText(context, "Loading data", Toast.LENGTH_SHORT).show()
                 viewModel.registerNumber(it)
             }
 
