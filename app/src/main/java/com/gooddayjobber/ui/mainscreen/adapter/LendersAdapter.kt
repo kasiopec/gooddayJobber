@@ -1,6 +1,5 @@
-package com.gooddayjobber.ui.MainScreen.adapter
+package com.gooddayjobber.ui.mainscreen.adapter
 
-import android.content.DialogInterface.OnClickListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

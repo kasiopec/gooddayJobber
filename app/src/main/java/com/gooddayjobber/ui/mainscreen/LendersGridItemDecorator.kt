@@ -1,4 +1,4 @@
-package com.gooddayjobber.ui.MainScreen
+package com.gooddayjobber.ui.mainscreen
 
 import android.graphics.Rect
 import android.view.View

@@ -4,24 +4,84 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.DetailsScreen.SecondFragment">
+    tools:context=".ui.detailsscreen.SecondFragment">
 
     <TextView
-        android:id="@+id/textview_second"
+        android:id="@+id/lenderName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/button_second"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button_second"
+    <ImageView
+        android:id="@+id/lenderImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HUJ"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_second" />
+        app:layout_constraintTop_toBottomOf="@+id/lenderName"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/lenedersZeroPercent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lenderSlogan" />
+
+    <TextView
+        android:id="@+id/lenderMinY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lenedersZeroPercent" />
+
+    <TextView
+        android:id="@+id/lenderMaxY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lenedersZeroPercent" />
+
+    <TextView
+        android:id="@+id/lenderFirstLoan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/lenderMinY"
+        app:layout_constraintTop_toBottomOf="@+id/lenderMinY" />
+
+    <TextView
+        android:id="@+id/lenderMaxAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/lenderMaxY"
+        app:layout_constraintTop_toBottomOf="@+id/lenderMaxY" />
+
+    <TextView
+        android:id="@+id/lenderSlogan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/lenderImage"
+        app:layout_constraintStart_toStartOf="@+id/lenderImage"
+        app:layout_constraintTop_toBottomOf="@+id/lenderImage" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

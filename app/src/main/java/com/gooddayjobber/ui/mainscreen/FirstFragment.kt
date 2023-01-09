@@ -1,7 +1,5 @@
-package com.gooddayjobber.ui.MainScreen
+package com.gooddayjobber.ui.mainscreen
 
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -19,15 +16,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.gooddayjobber.R
 import com.gooddayjobber.databinding.FragmentFirstBinding
-import com.gooddayjobber.ui.MainScreen.adapter.LendersAdapter
+import com.gooddayjobber.ui.mainscreen.adapter.LendersAdapter
 import com.gooddayjobber.util.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
-
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 
 @AndroidEntryPoint
 class FirstFragment : Fragment() {
@@ -38,7 +31,9 @@ class FirstFragment : Fragment() {
     private var textFieldData: String? = null
     private val recyclerColumns = 2
     private val adapter = LendersAdapter(emptyList(), LendersAdapter.OnClickListener { item ->
-        findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        Timber.d("item sent: $item")
+        val directions = FirstFragmentDirections.actionFirstFragmentToSecondFragment(item)
+        findNavController().navigate(directions)
 
     })
 
@@ -108,8 +103,6 @@ class FirstFragment : Fragment() {
                 includeEdge = true
             )
         )
-
-
         binding.lendersRecycler.adapter = adapter
 
         binding.seekBarMaxValueText.text = 60000.toString()
@@ -160,17 +153,12 @@ class FirstFragment : Fragment() {
 
         })
 
-
-
         binding.buttonAccept.setOnClickListener {
             hideKeyboard()
-
             textFieldData?.let {
                 Toast.makeText(context, "Loading data", Toast.LENGTH_SHORT).show()
                 viewModel.registerNumber(it)
             }
-
-            //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
     }
 

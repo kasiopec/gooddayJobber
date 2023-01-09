@@ -1,6 +1,5 @@
 package com.gooddayjobber
 
-import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -9,10 +8,9 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
-import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import com.gooddayjobber.databinding.ActivityMainBinding
-import com.gooddayjobber.ui.MainScreen.FirstFragViewModel
+import com.gooddayjobber.ui.mainscreen.FirstFragViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
